@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MusicPlayer</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="settings">Settings</string>
+    <string name="media_library">Media Library</string>
+    <string name="add_folder">Add Folder</string>
+    <string name="level_up">Level Up</string>
+    <string name="select">Select</string>
+    <string name="root">Root</string>
+</resources>
