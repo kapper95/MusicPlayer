@@ -4,10 +4,11 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "folders")
 public class Folder {
 
     @PrimaryKey
+    @ColumnInfo(name = "folderid")
     private int id;
 
     @ColumnInfo(name = "path")
@@ -16,7 +17,8 @@ public class Folder {
     @ColumnInfo(name = "last_modified")
     private long lastModified;
 
-    public Folder(String path, long lastModified) {
+    public Folder(int id, String path, long lastModified) {
+        this.id = id;
         this.path = path;
         this.lastModified = lastModified;
     }

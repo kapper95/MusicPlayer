@@ -4,10 +4,11 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "albums")
 public class Album {
 
     @PrimaryKey
+    @ColumnInfo(name = "albumid")
     private int aid;
 
     @ColumnInfo(name = "album")
@@ -21,7 +22,8 @@ public class Album {
 
     public Album() {}
 
-    public Album(String album, long date, String artist) {
+    public Album(int aid, String album, long date, String artist) {
+        this.aid = aid;
         this.album = album;
         this.date = date;
         this.artist = artist;
