@@ -15,14 +15,14 @@ public class Album {
     private String album;
 
     @ColumnInfo(name = "date")
-    private long date;
+    private String date;
 
     @ColumnInfo(name = "artist")
     private String artist;
 
     public Album() {}
 
-    public Album(int aid, String album, long date, String artist) {
+    public Album(int aid, String album, String date, String artist) {
         this.aid = aid;
         this.album = album;
         this.date = date;
@@ -45,11 +45,11 @@ public class Album {
         this.album = album;
     }
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

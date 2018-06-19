@@ -2,18 +2,24 @@ package com.example.kaspe.musicplayer;
 
 import android.Manifest;
 import android.app.Activity;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.kaspe.musicplayer.database.AppDatabase;
+import com.example.kaspe.musicplayer.database.Folder;
+
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -91,5 +97,21 @@ public class MainActivity extends Activity {
                 mediaPlayerHolder.pause();
             }
         });
+
+        new MediaSannerStartTask().execute();
+    }
+
+    private class MediaSannerStartTask extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                    AppDatabase.class, "database").build();
+            List<Folder> folders = db.dao().getFolders();
+            for (Folder folder: folders) {
+                new MediaScanner(getApplicationContext()).execute(folder.getPath());
+            }
+            return null;
+        }
     }
 }

@@ -20,13 +20,19 @@ public interface DAO {
     void deleteFolder(Folder folder);
 
     @Query("SELECT * FROM albums")
-    List<Album> gerAlbums();
+    List<Album> getAlbums();
+
+    @Query("SELECT * FROM albums WHERE album = :album LIMIT 1")
+    Album findAlbum(String album);
 
     @Insert
     void insertAlbum(Album album);
 
     @Delete
     void deleteAlbum(Album album);
+
+    @Query("SELECT * FROM tracks")
+    List<Track> getTracks();
 
     @Insert
     void insertTrack(Track track);
