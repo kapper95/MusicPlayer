@@ -55,7 +55,10 @@ public class MediaScanner extends AsyncTask<String, Void, Void> {
         String artist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
         int number = Integer.parseInt(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_CD_TRACK_NUMBER));
         String date = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE);
-        int discNr = Integer.parseInt(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DISC_NUMBER));
+        String disc = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DISC_NUMBER);
+        int discNr = 0;
+        if(disc != null)
+            discNr = Integer.parseInt(disc);
         int duration = Integer.parseInt(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
         String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
         long lastModified =  file.lastModified();
