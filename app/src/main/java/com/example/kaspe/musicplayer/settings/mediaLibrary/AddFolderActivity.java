@@ -1,6 +1,8 @@
 package com.example.kaspe.musicplayer.settings.mediaLibrary;
 
 import android.app.Activity;
+import android.arch.persistence.room.Room;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaspe.musicplayer.R;
+import com.example.kaspe.musicplayer.database.AppDatabase;
+import com.example.kaspe.musicplayer.database.Folder;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -50,6 +54,8 @@ public class AddFolderActivity extends Activity implements FolderAdapter.OnItemC
 
         Button levelUpButton = findViewById(R.id.button_level_up);
         levelUpButton.setOnClickListener(levelUpListener);
+        Button selectButton = findViewById(R.id.button_select);
+        selectButton.setOnClickListener(selectListener);
     }
 
     @Override
@@ -88,6 +94,18 @@ public class AddFolderActivity extends Activity implements FolderAdapter.OnItemC
                 pathShowed = pathShowed.substring(0, index);
                 textViewFolderPath.setText(pathShowed);
             }
+        }
+    };
+
+    View.OnClickListener selectListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Folder folder = new Folder();
+            folder.setPath(path);
+            File file = new File(path);
+            long lastModified = file.lastModified();
+            folder.setLastModified(lastModified);
+            new SelectfolderTask().execute(folder);
         }
     };
 
@@ -135,5 +153,16 @@ public class AddFolderActivity extends Activity implements FolderAdapter.OnItemC
         }
         rootFolders = folders;
         subFolders = folders;
+    }
+
+    private class SelectfolderTask extends AsyncTask<Folder, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Folder... folders) {
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                    AppDatabase.class, "database").build();
+            db.dao().insertFolder(folders[0]);
+            return null;
+        }
     }
 }
